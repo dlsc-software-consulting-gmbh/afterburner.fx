@@ -21,22 +21,6 @@ package com.airhacks.afterburner.views;
  */
 import com.airhacks.afterburner.injection.Injector;
 import com.airhacks.afterburner.injection.PresenterFactory;
-import java.io.IOException;
-import java.net.URL;
-import java.util.List;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
-import static java.util.ResourceBundle.getBundle;
-import java.util.concurrent.CompletableFuture;
-import static java.util.concurrent.CompletableFuture.supplyAsync;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -47,6 +31,24 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import static java.util.ResourceBundle.getBundle;
+import static java.util.concurrent.CompletableFuture.supplyAsync;
 
 /**
  * @author adam-bien.com
