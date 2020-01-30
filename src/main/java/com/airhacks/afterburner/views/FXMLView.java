@@ -19,6 +19,7 @@ package com.airhacks.afterburner.views;
  * limitations under the License.
  * #L%
  */
+
 import com.airhacks.afterburner.injection.Injector;
 import com.airhacks.afterburner.injection.PresenterFactory;
 import javafx.application.Platform;
@@ -60,7 +61,8 @@ public abstract class FXMLView extends StackPane {
     protected FXMLLoader fxmlLoader;
     protected String bundleName;
     protected ResourceBundle bundle;
-    protected final Function<String, Object> injectionContext;
+    protected PresenterFactory presenterFactory;
+    protected Function<String, Object> injectionContext;
     protected URL resource;
     protected static Executor FX_PLATFORM_EXECUTOR = Platform::runLater;
 
@@ -71,16 +73,38 @@ public abstract class FXMLView extends StackPane {
      * context.
      */
     public FXMLView() {
-        this(f -> null);
+        this(null, f -> null);
     }
 
     /**
+     * Constructs the view lazily (fxml is not loaded) with empty injection
+     * context.
+     */
+    public FXMLView(PresenterFactory factory) {
+        this(factory, f -> null);
+    }
+
+    /**
+     * Constructs a new FXML view.
      *
      * @param injectionContext the function is used as a injection source.
-     * Values matching for the keys are going to be used for injection into the
-     * corresponding presenter.
+     *                         Values matching for the keys are going to be used for injection into the
+     *                         corresponding presenter.
      */
     public FXMLView(Function<String, Object> injectionContext) {
+        this(null, injectionContext);
+    }
+
+    /**
+     * Constructs a new FXML view.
+     *
+     * @param presenterFactory an explicit presenter factory, needed when working with different contexts in the same application
+     * @param injectionContext the function is used as a injection source.
+     *                         Values matching for the keys are going to be used for injection into the
+     *                         corresponding presenter.
+     */
+    public FXMLView(PresenterFactory presenterFactory, Function<String, Object> injectionContext) {
+        this.presenterFactory = presenterFactory;
         this.injectionContext = injectionContext;
         this.init(getFXMLName());
     }
@@ -106,6 +130,10 @@ public abstract class FXMLView extends StackPane {
     }
 
     PresenterFactory discover() {
+        if (presenterFactory != null) {
+            return presenterFactory;
+        }
+
         Iterable<PresenterFactory> discoveredFactories = PresenterFactory.discover();
         List<PresenterFactory> factories = StreamSupport.stream(discoveredFactories.spliterator(), false).
                 collect(Collectors.toList());
@@ -159,7 +187,6 @@ public abstract class FXMLView extends StackPane {
      * Creates the view asynchronously using an internal thread pool and passes
      * the parent node within the UI Thread.
      *
-     *
      * @param consumer - an object interested in received the Parent as callback
      */
     public void getViewAsync(Consumer<Parent> consumer) {
@@ -199,7 +226,6 @@ public abstract class FXMLView extends StackPane {
     }
 
     /**
-     *
      * @return the name of the fxml file derived from the FXML view. e.g. The
      * name for the AirhacksView is going to be airhacks.fxml.
      */
@@ -253,10 +279,9 @@ public abstract class FXMLView extends StackPane {
     }
 
     /**
-     *
      * @param lowercase indicates whether the simple class name should be
-     * converted to lowercase of left unchanged
-     * @param ending the suffix to append
+     *                  converted to lowercase of left unchanged
+     * @param ending    the suffix to append
      * @return the conventional name with stripped ending
      */
     protected String getConventionalName(boolean lowercase, String ending) {
@@ -264,7 +289,6 @@ public abstract class FXMLView extends StackPane {
     }
 
     /**
-     *
      * @param lowercase indicates whether the simple class name should be
      * @return the name of the view without the "View" prefix.
      */
@@ -299,7 +323,6 @@ public abstract class FXMLView extends StackPane {
     }
 
     /**
-     *
      * @return an existing resource bundle, or null
      */
     public ResourceBundle getResourceBundle() {
@@ -317,7 +340,6 @@ public abstract class FXMLView extends StackPane {
     }
 
     /**
-     *
      * @param t exception to report
      * @return nothing
      */
