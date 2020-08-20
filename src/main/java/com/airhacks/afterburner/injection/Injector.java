@@ -19,8 +19,15 @@ package com.airhacks.afterburner.injection;
  * limitations under the License.
  * #L%
  */
+
 import com.airhacks.afterburner.configuration.Configurator;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -28,14 +35,12 @@ import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-import javax.inject.Inject;
 
 /**
  *
@@ -224,13 +229,7 @@ public class Injector {
     }
 
     static Function<Class<?>, Object> getDefaultInstanceSupplier() {
-        return (c) -> {
-            try {
-                return c.newInstance();
-            } catch (InstantiationException | IllegalAccessException ex) {
-                throw new IllegalStateException("Cannot instantiate view: " + c, ex);
-            }
-        };
+        return new DefaultInstanceProvider();
     }
 
     public static Consumer<String> getDefaultLogger() {
@@ -240,5 +239,40 @@ public class Injector {
 
     private static boolean isNotPrimitiveOrString(Class<?> type) {
         return !type.isPrimitive() && !type.isAssignableFrom(String.class);
+    }
+
+    private static class DefaultInstanceProvider implements Function<Class<?>, Object> {
+
+        private Map<Class<?>,Object> instanceCache = new HashMap<>();
+
+        @Override
+        public Object apply(Class<?> cls) {
+
+            boolean singleton = cls.isAnnotationPresent(Singleton.class);
+            try {
+
+                if ( singleton ) {
+                    // 1.8 API is not used intentionally so everything works in mobile environments
+                    Object instance = instanceCache.get(cls);
+                    if ( instance != null ) return instance;
+                }
+
+                // instantiate using default constructor even if it is private
+                Constructor<?> defaultConstructor =  cls.getDeclaredConstructor();
+                defaultConstructor.setAccessible(true);
+                Object instance = defaultConstructor.newInstance();
+
+                if ( singleton )  {
+                    instanceCache.put(cls, instance);
+                }
+                return instance;
+
+            } catch (Throwable ex) {
+                throw new IllegalStateException("Cannot instantiate a view: " + cls, ex);
+            }
+
+        }
+
+
     }
 }
