@@ -27,7 +27,7 @@ module afterburner.fx {
     requires javax.inject;
     requires java.annotation;
 
-    requires java.logging;
+    requires org.slf4j;
 
     exports com.airhacks.afterburner.configuration;
     exports com.airhacks.afterburner.injection;

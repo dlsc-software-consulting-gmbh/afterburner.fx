@@ -19,16 +19,16 @@ package com.airhacks.afterburner.injection;
  * limitations under the License.
  * #L%
  */
+import org.junit.After;
+import org.junit.Test;
+import org.mockito.Mockito;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 import static org.hamcrest.CoreMatchers.is;
-
-import org.junit.After;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
@@ -36,23 +36,13 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
-
-import static org.mockito.Matchers.anyString;
-
-import org.mockito.Mockito;
-
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-
 /**
  *
  * @author adam-bien.com
  */
 public class InjectorTest {
 
-    
+
 	@Test
     public void injection() {
         View view = Injector.instantiatePresenter(View.class);
@@ -181,15 +171,6 @@ public class InjectorTest {
         Date actual = systemProperties.getCustomDate();
         //java.util.Date is not a primitive, or String. Can be created and injected.
         assertNotNull(actual);
-    }
-    
-	@Test
-    public void logging() {
-		@SuppressWarnings("unchecked")
-        Consumer<String> logger = mock(Consumer.class);
-        Injector.setLogger(logger);
-        Injector.injectAndInitialize(new DateProperties());
-        verify(logger, atLeastOnce()).accept(anyString());
     }
 
     @After

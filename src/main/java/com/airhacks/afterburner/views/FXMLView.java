@@ -32,6 +32,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URL;
@@ -45,8 +47,6 @@ import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -57,7 +57,7 @@ import static java.util.concurrent.CompletableFuture.supplyAsync;
  * @author adam-bien.com
  */
 public abstract class FXMLView extends StackPane {
-    private static final Logger LOGGER = Logger.getLogger(FXMLView.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(FXMLView.class);
 
     public static final String DEFAULT_ENDING = "View";
     public static final String CSS_FILE_ENDING = ".css";
@@ -150,7 +150,7 @@ public abstract class FXMLView extends StackPane {
         if (factories.size() == 1) {
             return factories.get(0);
         } else {
-            factories.forEach(s->LOGGER.severe(s.toString()));
+            factories.forEach(s -> LOGGER.error(s.toString()));
             throw new IllegalStateException("More than one PresenterFactories discovered");
         }
 
@@ -227,7 +227,7 @@ public abstract class FXMLView extends StackPane {
             return;
         }
         String uriToCss = uri.toExternalForm();
-        if (!parent.getStylesheets().contains(uriToCss)){
+        if (!parent.getStylesheets().contains(uriToCss)) {
             parent.getStylesheets().add(uriToCss);
         }
     }
@@ -238,6 +238,7 @@ public abstract class FXMLView extends StackPane {
 
     /**
      * .bss files are binary encoded css files which javafx produces.
+     *
      * @return the conventional name of the bss file expected.
      */
     String getBinaryStyleSheetName() {
@@ -258,13 +259,13 @@ public abstract class FXMLView extends StackPane {
         if (found != null) {
             return name;
         }
-        LOGGER.config("File: " + name + " not found, attempting with camel case");
+        LOGGER.info("File: " + name + " not found, attempting with camel case");
         name = getConventionalName(false, ending);
         found = getClass().getResource(name);
         if (mandatory && found == null) {
             final String message = "Cannot load file " + name;
-            LOGGER.severe(message);
-            LOGGER.severe("Stopping initialization phase...");
+            LOGGER.error(message);
+            LOGGER.error("Stopping initialization phase...");
             throw new IllegalStateException(message);
         }
         return name;
@@ -363,7 +364,7 @@ public abstract class FXMLView extends StackPane {
      * @return nothing
      */
     public Void exceptionReporter(Throwable t) {
-        LOGGER.log(Level.SEVERE,"Exception thrown in afterburner.fx",t);
+        LOGGER.error("Exception thrown in afterburner.fx", t);
         return null;
     }
 
