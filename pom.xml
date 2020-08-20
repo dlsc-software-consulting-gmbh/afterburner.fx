@@ -53,6 +53,10 @@
             <organization>DLSC Software and Consulting GmbH</organization>
             <organizationUrl>http://dlsc.com</organizationUrl>
         </developer>
+        <developer>
+            <name>Tobias Diez</name>
+            <url>http://tobiasdiez.com/</url>
+        </developer>
     </developers>
 
     <dependencies>
