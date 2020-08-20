@@ -1,8 +1,10 @@
+package com.airhacks.afterburner.views.binary;
+
 /*
  * #%L
  * afterburner.fx
  * %%
- * Copyright (C) 2013 - 2019 Adam Bien
+ * Copyright (C) 2013 - 2020 Adam Bien
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,21 +19,12 @@
  * limitations under the License.
  * #L%
  */
-import com.airhacks.afterburner.injection.PresenterFactory;
 
-module afterburner.fx {
-    requires javafx.base;
-    requires javafx.fxml;
-    requires javafx.graphics;
+ import com.airhacks.afterburner.views.FXMLView;
 
-    requires javax.inject;
-    requires java.annotation;
+ /**
+  * @author Ben Oxley
+  */
+ public class BinaryView extends FXMLView {
 
-    requires java.logging;
-
-    exports com.airhacks.afterburner.configuration;
-    exports com.airhacks.afterburner.injection;
-    exports com.airhacks.afterburner.views;
-
-    uses PresenterFactory;
-}
+ }
