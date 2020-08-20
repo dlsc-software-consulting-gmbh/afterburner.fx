@@ -1,12 +1,16 @@
 # Change Log
 
-## [Unreleased](https://github.com/dlsc-software-consulting-gmbh/afterburner.fx/tree/HEAD)
-
-[Full Changelog](https://github.com/dlsc-software-consulting-gmbh/afterburner.fx/compare/2.0.1...HEAD)
+## [2.1.0](https://github.com/dlsc-software-consulting-gmbh/afterburner.fx/tree/2.1.0) (2020-08-20)
+[Full Changelog](https://github.com/dlsc-software-consulting-gmbh/afterburner.fx/compare/2.0.1...2.1.0)
 
 **Closed issues:**
 
 - Add possibility to use different CDI contexts for FXMLView [\#1](https://github.com/dlsc-software-consulting-gmbh/afterburner.fx/issues/1)
+
+**Merged pull requests:**
+
+- Add initial editorconfig [\#3](https://github.com/dlsc-software-consulting-gmbh/afterburner.fx/pull/3) ([koppor](https://github.com/koppor))
+- Use gitignore patterns from gitignore.io [\#2](https://github.com/dlsc-software-consulting-gmbh/afterburner.fx/pull/2) ([koppor](https://github.com/koppor))
 
 ## [2.0.1](https://github.com/dlsc-software-consulting-gmbh/afterburner.fx/tree/2.0.1) (2020-01-30)
 [Full Changelog](https://github.com/dlsc-software-consulting-gmbh/afterburner.fx/compare/2.0.0...2.0.1)
