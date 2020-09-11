@@ -1,4 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.dlsc.afterburner</groupId>
     <artifactId>afterburner.fx</artifactId>
@@ -6,7 +8,9 @@
     <packaging>jar</packaging>
 
     <name>afterburner.fx</name>
-    <description>afterburner.fx is a minimalistic JavaFX MVP framework based on Convention over Configuration and Dependency Injection</description>
+    <description>afterburner.fx is a minimalistic JavaFX MVP framework based on
+        Convention over Configuration and Dependency Injection
+    </description>
     <url>http://afterburner.adam-bien.com</url>
     <organization>
         <name>Adam Bien</name>
@@ -15,13 +19,18 @@
     <inceptionYear>2013</inceptionYear>
 
     <scm>
-        <url>https://github.com/dlsc-software-consulting-gmbh/afterburner.fx</url>
+        <url>https://github.com/dlsc-software-consulting-gmbh/afterburner.fx
+        </url>
     </scm>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <javafx.version>11.0.2</javafx.version>
         <slf4j.version>1.7.29</slf4j.version>
+        <sonar.projectKey>dlsc-software-consulting-gmbh_afterburner.fx
+        </sonar.projectKey>
+        <sonar.organization>dlsc-software-consulting-gmbh</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
 
     <distributionManagement>
@@ -154,7 +163,8 @@
                     <failOnError>false</failOnError>
                     <force>true</force>
                     <windowtitle>AfterburnerFX</windowtitle>
-                    <additionalJOption>-J-Djavafx.javadoc=true</additionalJOption>
+                    <additionalJOption>-J-Djavafx.javadoc=true
+                    </additionalJOption>
                     <docfilessubdirs>true</docfilessubdirs>
                 </configuration>
                 <executions>
@@ -214,7 +224,8 @@
                     <include>**/*.bss</include>
                     <include>**/*.css</include>
                     <include>**/*.properties</include>
-                </includes>            </resource>
+                </includes>
+            </resource>
             <resource>
                 <directory>src/main/resources</directory>
                 <includes>
